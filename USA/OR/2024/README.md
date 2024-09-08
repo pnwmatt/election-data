@@ -4,6 +4,8 @@ This file contains TSV data for the upcoming Oregon General Election on November
 
 All counties and sourced from https://secure.sos.state.or.us/orestar/gotoLocalMeasSearch.do on Saturday, Sept 7 2024 9:55pm PT.
 
+I manually edited the name of Measure 23-74 to allow for the removal of the quotes, as though even this is TSV, it's hard to render sometimes?  Idk github.
+
 ### Candidates
 
 Candidates were based on filings that weren't disqualified at the time I pulled them in, around 10:15pm the same day.
