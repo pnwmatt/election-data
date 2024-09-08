@@ -11,21 +11,36 @@ Candidates were based on filings that weren't disqualified at the time I pulled 
 I used this PHP code to adjust multi-line answers and replaced the "\n" with "; ":
 
 ```php
-<?php
 
 $o = fopen("officials.tsv", "r");
 
+$lines = [];
+
 // read the file line by line.  trim each line.  if the line starts with "2024 General Election", then prefix a newline character.
+$line = '';
 while (!feof($o)) {
-    $line = trim(fgets($o));
-    if (strpos($line, "2024 General Election") === 0) {
-        echo "\n" . $line;
+    $segment = trim(fgets($o));
+    if (strpos($segment, "2024 General Election") === 0) {
+        $lines[] = $line;
+        $line = $segment;
     } else {
-        echo "; " . $line;
+        $line .= '; ' . $segment;
     }
 }
 
 // close the file
 fclose($o);
-echo "\n";
+
+// Loop through each line and let's remove the PII columns
+$colsToOmit = array(35, 36, 41, 42, 47, 48, 49, 50, 51);
+foreach ($lines as $key => $line) {
+    $cols = explode("\t", $line);
+    if ($key != 0) {
+        foreach ($colsToOmit as $col) {
+            $cols[$col] = "redacted";
+        }
+    }
+    $line2 = implode("\t", $cols);
+    echo $line2 . "\n";
+}
 ```
